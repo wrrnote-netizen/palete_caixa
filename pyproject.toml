@@ -1,0 +1,22 @@
+[project]
+name = "palete-caixa"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "wrrnote-netizen", email = "wrrnote@gmail.com" }
+]
+requires-python = ">=3.14"
+dependencies = [
+    "ipykernel>=7.3.0",
+    "matplotlib>=3.11.2",
+    "numpy>=2.5.3",
+    "pulp>=3.3.2",
+]
+
+[project.scripts]
+palete-caixa = "palete_caixa:main"
+
+[build-system]
+requires = ["uv_build>=0.12.13,<0.13.0"]
+build-backend = "uv_build"
