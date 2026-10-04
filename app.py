@@ -1,6 +1,7 @@
 import streamlit as st
 from paginas.login import pagina_login
 from paginas.listar_usuarios import pagina_listar
+from paginas.criar_usuario import pagina_criar
 
 st.set_page_config(page_title="Palete-Caixa",
                    page_icon="📦",
@@ -10,7 +11,7 @@ st.set_page_config(page_title="Palete-Caixa",
 if "usuario" not in st.session_state:
     st.session_state.usuario = None
 
-print(st.session_state.usuario)
+# print(st.session_state.usuario)
 
 if st.session_state.usuario is None:
     pagina_login()
@@ -41,4 +42,6 @@ else:
 
     if pagina == "Listar Usuários":
         pagina_listar()
+    elif pagina == "Criar Usuário":
+        pagina_criar()
 
