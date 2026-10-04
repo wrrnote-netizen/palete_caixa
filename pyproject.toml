@@ -17,6 +17,7 @@ dependencies = [
     "pulp>=3.3.2",
     "python-dotenv>=1.2.3",
     "sqlalchemy>=2.0.54",
+    "streamlit>=1.64.0",
     "tqdm>=4.70.1",
 ]
 
