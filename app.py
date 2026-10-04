@@ -3,6 +3,8 @@ from paginas.login import pagina_login
 from paginas.listar_usuarios import pagina_listar
 from paginas.criar_usuario import pagina_criar
 from paginas.alterar_senha import pagina_alterar_senha
+from paginas.deletar_usuario import pagina_deletar
+from paginas.alterar_status import pagina_alterar_status
 
 st.set_page_config(page_title="Palete-Caixa",
                    page_icon="📦",
@@ -47,3 +49,9 @@ else:
         pagina_criar()
     elif pagina == "Alterar Senha":
         pagina_alterar_senha()
+    elif pagina == "Alterar Status":
+        pagina_alterar_status()
+    elif pagina == "Deletar Usuário":
+        pagina_deletar()
+
+
