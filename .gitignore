@@ -16,6 +16,8 @@ wheels/
 *.pdf
 *.pptx
 *.env
+solucoes_salvas/
+codigo_acesso_aws.txt
 
 
 
