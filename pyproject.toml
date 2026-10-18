@@ -9,11 +9,12 @@ authors = [
 requires-python = ">=3.14"
 dependencies = [
     "bcrypt>=5.0.0",
+    "boto3>=1.43.111",
     "ipykernel>=7.3.0",
     "matplotlib>=3.11.2",
     "numpy>=2.5.3",
     "pandas>=3.0.6",
-    "psycopg2>=2.9.13",
+    "psycopg2-binary>=2.9.13",
     "pulp>=3.3.2",
     "python-dotenv>=1.2.3",
     "sqlalchemy>=2.0.54",

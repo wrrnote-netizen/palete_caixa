@@ -1,9 +1,8 @@
 import os
 import re
-import subprocess
 import threading
-from signal import SIGKILL
 
+import psutil
 import pulp as plp
 from pulp import LpProblem
 
@@ -39,10 +38,15 @@ def _extrair_solucao(prob: LpProblem) -> list:
 
 def _pids_do_solver(diretorio_tmp: str) -> list:
     """PIDs dos processos cuja linha de comando referencia o diretorio temporario."""
-    saida = subprocess.run(
-        ["pgrep", "-f", diretorio_tmp], capture_output=True, text=True
-    ).stdout
-    return [int(pid) for pid in saida.split() if int(pid) != os.getpid()]
+    alvo = os.path.normcase(os.path.realpath(diretorio_tmp))
+    pids = []
+    for proc in psutil.process_iter(["pid", "cmdline"]):
+        if proc.info["pid"] == os.getpid():
+            continue
+        cmdline = " ".join(proc.info["cmdline"] or [])
+        if diretorio_tmp in cmdline or alvo in os.path.normcase(cmdline):
+            pids.append(proc.info["pid"])
+    return pids
 
 
 def resolver_com_limite(problema: LpProblem, solver, tempo_limite: float) -> bool:
@@ -66,8 +70,8 @@ def resolver_com_limite(problema: LpProblem, solver, tempo_limite: float) -> boo
         estourou.set()
         for pid in _pids_do_solver(solver.tmpDir):
             try:
-                os.kill(pid, SIGKILL)
-            except ProcessLookupError:
+                psutil.Process(pid).kill()
+            except psutil.NoSuchProcess:
                 pass
 
     vigia = threading.Thread(target=vigiar, daemon=True)

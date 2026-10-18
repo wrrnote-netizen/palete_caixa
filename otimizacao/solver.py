@@ -7,6 +7,8 @@ encaixadas, sem sobreposição. Gera soluções distintas por meio de cortes que
 impedem a repetição de layouts já encontrados.
 """
 
+import os
+import sys
 import tempfile
 import time
 
@@ -142,9 +144,13 @@ def resolver(
     )
 
     # ── Resolução (N soluções distintas) ─────────────────────────────────────
-    # solver_obj = plp.getSolver("PULP_CBC_CMD", msg=0)
     diretorio_tmp = tempfile.TemporaryDirectory(prefix="palete_caixa_")
-    solver_obj = plp.COIN_CMD(path="/opt/homebrew/bin/cbc", msg=0)
+    cbc_homebrew = "/opt/homebrew/bin/cbc"
+    if sys.platform == "darwin" and os.path.exists(cbc_homebrew):
+        solver_obj = plp.COIN_CMD(path=cbc_homebrew, msg=0)
+    else:
+        # CBC embutido no PuLP (Windows, Linux e macOS)
+        solver_obj = plp.PULP_CBC_CMD(msg=0)
     solver_obj.tmpDir = diretorio_tmp.name
     if tempo_limite is not None:
         solver_obj.timeLimit = tempo_limite

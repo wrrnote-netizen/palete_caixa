@@ -2,19 +2,20 @@ from sqlalchemy import Engine
 from sqlalchemy import create_engine, text
 from sqlalchemy.exc import IntegrityError
 import os
+from pathlib import Path
 from dotenv import load_dotenv
 import bcrypt
 from datetime import datetime
 
-load_dotenv("db_palete_caixa.env", override=True)
+load_dotenv(Path(__file__).resolve().parent.parent / "db_palete_caixa.env", override=True)
 
 HOST = os.getenv("HOST")
-PORT = os.getenv("PORT")
+DB_PORT = os.getenv("DB_PORT")
 USER = os.getenv("USER")
 DATABASE = os.getenv("DATABASE")
 PASS = os.getenv("PASS")
 
-url = f"postgresql+psycopg2://{USER}:{PASS}@{HOST}:{PORT}/{DATABASE}"
+url = f"postgresql+psycopg2://{USER}:{PASS}@{HOST}:{DB_PORT}/{DATABASE}"
 def get_engine() -> Engine:
     return create_engine(url, connect_args={"sslmode": "prefer"}, 
                          pool_pre_ping=True)
